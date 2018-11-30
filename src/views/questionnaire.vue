@@ -17,7 +17,8 @@
             <template v-for="(selection, index2) in item.selections">
               <li :key="index2">
                 <div class="check-button">
-                  <i class="iconfont icon-weigouxuan" :class="{'icon-gouxuan_': isSelected(item, selection.id)}"></i>
+                  <i class="iconfont icon-weigouxuan" :class="{'icon-gouxuan_': isSelected(item, selection.id)}"
+                  @click="handleClick(selection.id, index1)"></i>
                 </div>
                 <div class="check-label" @click="handleClick(selection.id, index1)">{{selection.label}}</div>
               </li>
@@ -112,7 +113,7 @@
               result.push(value);
             }
             break;
-          default: 
+          default:
             result = value;
             break;
         }
@@ -124,7 +125,7 @@
         switch (item.type) {
           case 'check-box':
             return (item.result || []).includes(value);
-          default: 
+          default:
             return item.result === value;
         }
       }
