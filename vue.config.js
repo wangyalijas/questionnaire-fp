@@ -1,5 +1,7 @@
 module.exports = {
-
+  baseUrl: process.env.NODE_ENV === 'production'
+    ? '/qa-user-phone/'
+    : '/',
   chainWebpack: (config) => {
     const oneOfsMap = config.module.rule('scss').oneOfs.store;
     oneOfsMap.forEach((item) => {
