@@ -141,6 +141,7 @@ export default {
     content: "\e623";
     font-size: 0.51rem;
     transition: .1s;
+    color: #E7E7E7;
   }
   .icon-gouxuan_:before {
     font-family: iconfont;
