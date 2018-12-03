@@ -26,9 +26,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'hobby'
-  }
+export default {
+  name: 'hobby',
+};
 </script>
 
 <style lang="scss" scoped>
