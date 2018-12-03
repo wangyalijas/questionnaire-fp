@@ -136,6 +136,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .icon-weigouxuan:before {
+    font-family: iconfont;
+    content: "\e623";
+    font-size: 0.51rem;
+    transition: .1s;
+  }
+  .icon-gouxuan_:before {
+    font-family: iconfont;
+    content: "\e630";
+    font-size: 0.51rem;
+    transition: .1s;
+    color: #2660F7;
+  }
   .questionnaire {
     .background {
       height: 7.23rem;
