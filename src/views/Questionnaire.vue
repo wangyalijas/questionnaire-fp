@@ -101,11 +101,9 @@ export default {
   methods: {
     handleClick(id, index) {
       this.setValueToItem(this.lists[index], id);
-      console.log(this.lists[index].result);
     },
     setValueToItem(item, value) {
       let result;
-
       switch (item.type) {
         case 'check-box':
           result = item.result || [];
@@ -119,11 +117,9 @@ export default {
           result = value;
           break;
       }
-
       this.$set(item, 'result', result);
     },
     isSelected(item, value) {
-      console.log(item, value);
       switch (item.type) {
         case 'check-box':
           return (item.result || []).includes(value);
