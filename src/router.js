@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login.vue';
 import Home from './views/Home'
-import Questionnaire from './views/questionnaire'
+import Questionnaire from './views/Questionnaire'
 import About from './views/About'
 import Hobby from './views/Hobby'
 

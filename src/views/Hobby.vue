@@ -1,6 +1,7 @@
 <template>
   <div class="questionnaire">
     <div class="background">
+      <img src="../../public/img/fill.svg" alt="" class="fill">
       <div class="bg-button">
         <span class="bg-left"  @click="handleRouter('about')">
           <img src="../../public/img/class.svg" alt="">
@@ -36,6 +37,11 @@
       height: 7.23rem;
       background-color: #234AF4;
       position: relative;
+      .fill {
+        position: absolute;
+        top: 1.07rem;
+        right: 0.67rem;
+      }
       .bg-button {
         width: 4rem;
         height: 1rem;
@@ -52,12 +58,12 @@
         .bg-left {
           width: 0.71rem;
           height: 0.71rem;
-          opacity: 0.36;
           border-radius: 50%;
           position: absolute;
           padding: 0.13rem;
           left: 0;
-          background: rgb(223,232,255);
+          /*background: rgb(223,232,255);*/
+          background-color: #6C8DFF;
           img {
             width: 100%;
             height: 100%;

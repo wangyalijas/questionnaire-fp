@@ -1,8 +1,9 @@
 <template>
   <div class="questionnaire">
     <div class="background">
-      <div class="bg-button">
-        <span class="bg-left" @click="handleRouter('about')">
+      <img src="../../public/img/fill.svg" alt="" class="fill">
+      <div class="bg-button" @click="handleRouter('about')">
+        <span class="bg-left">
           <img src="../../public/img/class.svg" alt="">
         </span>
         <span class="bg-right">课件浏览</span>
@@ -140,6 +141,11 @@ export default {
       height: 7.23rem;
       position: relative;
       background-color: #234AF4;
+      .fill {
+        position: absolute;
+        top: 1.07rem;
+        right: 0.67rem;
+      }
       .bg-button {
         width: 2.72rem;
         height: 1rem;
@@ -156,11 +162,11 @@ export default {
         .bg-left {
           width: 0.71rem;
           height: 0.71rem;
-          opacity: 0.36;
           border-radius: 50%;
           position: absolute;
           padding: 0.13rem;
-          background: rgb(223, 232, 255);
+          /*background-color: rgb(223, 232, 255);*/
+          background-color: #6C8DFF;
           left: 0;
           img {
             display: inline-flex;
