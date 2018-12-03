@@ -6,10 +6,12 @@
 
 <script>
   export default {
-    name: 'app'
-  }
+    name: 'app',
+  };
+
 </script>
 <style lang="scss">
+  @import "../public/iconfont/iconfont.css";
   @font-face {font-family: "iconfont";
     src: url('../public/iconfont/iconfont.eot'); /* IE9*/
     src: url('../public/iconfont/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
