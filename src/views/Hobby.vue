@@ -28,6 +28,21 @@
 <script>
 export default {
   name: 'hobby',
+  created() {
+    this.$nextTick(() => {
+      this.getQuestionnaire()
+    })
+  },
+  methods: {
+    getQuestionnaire() {
+      let params = {
+        questionnaireId: this.$route.params.questionnaireId
+      }
+      this.$http(this.$api.getQuestionnaire, params).then(({data}) => {
+        this.data = data;
+      })
+    }
+  }
 };
 </script>
 

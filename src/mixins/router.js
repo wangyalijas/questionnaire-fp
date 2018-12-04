@@ -1,8 +1,9 @@
 export default {
   methods: {
-    handleRouter(name) {
+    handleRouter(name, params = {}) {
       this.$router.push({
-        name: name
+        name: name,
+        params: params
       })
     }
   }

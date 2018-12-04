@@ -3,42 +3,17 @@
       <div class="background">
       </div>
       <div class="list-content">
-        <div class="list-item clearfix">
+      <template v-for="(item, index) in data">
+        <div class="list-item clearfix" :key="index">
           <div class="list-left">
-            <div class="list-title">认识卫宁</div>
+            <div class="list-title">{{item.name}}</div>
             <div class="list-title-small">认识卫宁认识卫宁</div>
           </div>
           <div class="list-right">
-            <div class="button" @click="handleRouter('questionnaire')">参与考核</div>
+            <div class="button" @click="handleRouter(item.isHobby ? 'hobby' : 'questionnaire', {questionnaireId: item.GUID})">参与考核</div>
           </div>
         </div>
-        <div class="list-item clearfix">
-          <div class="list-left">
-            <div class="list-title">个人兴趣爱好</div>
-            <div class="list-title-small">让我们更了解你</div>
-          </div>
-          <div class="list-right">
-            <div class="button" @click="handleRouter('hobby')">参与考核</div>
-          </div>
-        </div>
-        <div class="list-item clearfix">
-          <div class="list-left">
-            <div class="list-title">认识卫宁</div>
-            <div class="list-title-small">认识卫宁认识卫宁</div>
-          </div>
-          <div class="list-right">
-            <div class="button" @click="handleRouter('questionnaire')">参与考核</div>
-          </div>
-        </div>
-        <div class="list-item clearfix">
-          <div class="list-left">
-            <div class="list-title">认识卫宁</div>
-            <div class="list-title-small">认识卫宁认识卫宁</div>
-          </div>
-          <div class="list-right">
-            <div class="button" @click="handleRouter('questionnaire')">参与考核</div>
-          </div>
-        </div>
+      </template>
       </div>
   </div>
 </template>
@@ -46,8 +21,25 @@
 <script>
 export default {
   name: 'home',
+  data() {
+    return {
+      data: []
+    }
+  },
   components: {
   },
+  created() {
+    this.$nextTick(() => {
+      this.getQuestionnaireList()
+    })
+  },
+  methods: {
+    getQuestionnaireList() {
+      this.$http(this.$api.getQuestionnaireList).then(({data}) => {
+        this.data = data;
+      })
+    }
+  }
 };
 </script>
 

@@ -11,127 +11,80 @@
       <div class="bg-title">0/5</div>
     </div>
     <div class="questionnaire-content">
-      <template v-for="(item, index1) in lists">
-        <div class="item" :key="index1">
-          <div class="title"><span class="check lint-height">[{{item.type=='radio' ? '单选' : '多选'}}]</span>{{item.title}}
-          </div>
-          <ul>
-            <template v-for="(selection, index2) in item.selections">
-              <li :key="index2">
-                <div class="check-button">
-                  <i class="iconfont icon-weigouxuan" :class="{'icon-gouxuan_': isSelected(item, selection.id)}"
-                     @click="handleClick(selection.id, index1)"></i>
-                </div>
-                <div class="check-label" @click="handleClick(selection.id, index1)">{{selection.label}}</div>
-              </li>
-            </template>
-          </ul>
-        </div>
+      <template v-for="(item, index) in data">
+        <component
+          :key="index"
+          :is="getModelName(item)"
+          :fatherIndex="index+1"
+          v-model="data[index]"
+          ref="models">
+        </component>
+        <!--<div v-if="item.type === 'Answer'" class="item textarea"  :key="index1">-->
+          <!--<div class="title"><span class="other lint-height">[其他]</span>{{item.name}}</div>-->
+          <!--<textarea placeholder="请输入内容" type="textarea" rows="2" autocomplete="off" validateevent="true"-->
+                    <!--class="textarea__inner" v-model="item.result"></textarea>-->
+        <!--</div>-->
+        <!--<div v-else class="item" :key="index1">-->
+          <!--<div class="title"><span class="check lint-height">[{{item.type=='Selection' ? '单选' : '多选'}}]</span>{{item.name}}-->
+          <!--</div>-->
+          <!--<ul>-->
+            <!--<template v-for="(selection, index2) in item.options">-->
+              <!--<li :key="index2">-->
+                <!--<div class="check-button">-->
+                  <!--<i class="iconfont icon-weigouxuan" :class="{'icon-gouxuan_': isSelected(item, selection.id)}"-->
+                     <!--@click="handleClick(selection.id, index1)"></i>-->
+                <!--</div>-->
+                <!--<div class="check-label" @click="handleClick(selection.id, index1)">{{selection.name}}</div>-->
+              <!--</li>-->
+            <!--</template>-->
+          <!--</ul>-->
+        <!--</div>-->
       </template>
-      <div class="item textarea">
-        <div class="title"><span class="other lint-height">[其他]</span>写给公司的话</div>
-        <textarea placeholder="请输入内容" type="textarea" rows="2" autocomplete="off" validateevent="true"
-                  class="textarea__inner"></textarea>
-        <div class="button" @click="handleRouter('home')">提交</div>
-      </div>
+      <div class="button" @click="handleRouter('home')">提交</div>
     </div>
   </div>
 </template>
 
 <script>
+import deserialize from '../utils/deserialize';
+import Models from '../components/questionnaire/models'
 export default {
   name: 'questionnaire',
   data() {
     return {
-      lists: [
-        {
-          index: 0,
-          type: 'radio',
-          title: ' 公司初建于（      ）年',
-          selections: [
-            {
-              label: 'A：1993',
-              id: 1,
-            },
-            {
-              label: 'B：1994',
-              id: 2,
-            },
-            {
-              label: 'C：2000',
-              id: 3,
-            },
-            {
-              label: 'D：2001',
-              id: 4,
-            },
-          ],
-          result: '',
-        },
-        {
-          index: 1,
-          type: 'check-box',
-          title: ' 公司初建于（      ）年',
-          selections: [
-            {
-              label: 'A：1993',
-              id: 1,
-            },
-            {
-              label: 'B：1994',
-              id: 2,
-            },
-            {
-              label: 'C：2000',
-              id: 3,
-            },
-            {
-              label: 'D：2001',
-              id: 4,
-            },
-          ],
-        },
-      ],
       result: {
         answers: [],
         selections: [],
       },
+      data: [],
     };
   },
+  created() {
+    this.$nextTick(() => {
+      this.getQuestionnaire()
+    })
+  },
   methods: {
-    handleClick(id, index) {
-      this.setValueToItem(this.lists[index], id);
-    },
-    setValueToItem(item, value) {
-      let result;
-      switch (item.type) {
-        case 'check-box':
-          result = item.result || [];
-          if (result.includes(value)) {
-            result.splice(result.indexOf(value), 1);
-          } else {
-            result.push(value);
-          }
-          break;
-        default:
-          result = value;
-          break;
+    getQuestionnaire() {
+      let params = {
+        questionnaireId: this.$route.params.questionnaireId
       }
-      this.$set(item, 'result', result);
+      this.$http(this.$api.getQuestionnaire, params).then(({data}) => {
+        this.data = this.deserialize(data);
+      })
     },
-    isSelected(item, value) {
-      switch (item.type) {
-        case 'check-box':
-          return (item.result || []).includes(value);
-        default:
-          return item.result === value;
-      }
+    deserialize(data) {
+      return deserialize(data)
+    },
+    getModelName (data) {
+      return `${data.type}Models`
     },
   },
+  components: { ...Models },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .icon-weigouxuan:before {
     font-family: iconfont;
     content: "\e623";
@@ -207,9 +160,6 @@ export default {
       min-height: 6rem;
       .item {
         padding: 0.43rem 0.80rem;
-        &.textarea {
-          /*position: fixed;*/
-        }
         .title {
           font-family: PingFangSC-Medium;
           font-size: 0.48rem;

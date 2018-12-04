@@ -1,8 +1,15 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import store from './store/index';
 import RouterMixin from './mixins/router'
+import http from './services/http/httpAxios';
+import api from './services/api';
+import LoadingMixin from './mixins/loading';
+
+Vue.prototype.$api = api;
+Vue.prototype.$http = http;
+Vue.mixin(LoadingMixin);
 
 Vue.config.productionTip = false;
 
