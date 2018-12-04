@@ -8,37 +8,18 @@
         </span>
         <span class="bg-right">课件浏览</span>
       </div>
-      <div class="bg-title">0/5</div>
+      <div class="bg-title">{{currentNumber}}/{{totalNumber}}</div>
     </div>
     <div class="questionnaire-content">
       <template v-for="(item, index) in data">
         <component
           :key="index"
           :is="getModelName(item)"
-          :fatherIndex="index+1"
+          :fatherIndex="index + 1"
           v-model="data[index]"
+          @writing="handleWriting(index)"
           ref="models">
         </component>
-        <!--<div v-if="item.type === 'Answer'" class="item textarea"  :key="index1">-->
-          <!--<div class="title"><span class="other lint-height">[其他]</span>{{item.name}}</div>-->
-          <!--<textarea placeholder="请输入内容" type="textarea" rows="2" autocomplete="off" validateevent="true"-->
-                    <!--class="textarea__inner" v-model="item.result"></textarea>-->
-        <!--</div>-->
-        <!--<div v-else class="item" :key="index1">-->
-          <!--<div class="title"><span class="check lint-height">[{{item.type=='Selection' ? '单选' : '多选'}}]</span>{{item.name}}-->
-          <!--</div>-->
-          <!--<ul>-->
-            <!--<template v-for="(selection, index2) in item.options">-->
-              <!--<li :key="index2">-->
-                <!--<div class="check-button">-->
-                  <!--<i class="iconfont icon-weigouxuan" :class="{'icon-gouxuan_': isSelected(item, selection.id)}"-->
-                     <!--@click="handleClick(selection.id, index1)"></i>-->
-                <!--</div>-->
-                <!--<div class="check-label" @click="handleClick(selection.id, index1)">{{selection.name}}</div>-->
-              <!--</li>-->
-            <!--</template>-->
-          <!--</ul>-->
-        <!--</div>-->
       </template>
       <div class="button" @click="handleRouter('home')">提交</div>
     </div>
@@ -47,7 +28,8 @@
 
 <script>
 import deserialize from '../utils/deserialize';
-import Models from '../components/questionnaire/models'
+import Models from '../components/questionnaire/models';
+
 export default {
   name: 'questionnaire',
   data() {
@@ -57,27 +39,48 @@ export default {
         selections: [],
       },
       data: [],
+      currentNumber: 0,
     };
+  },
+  computed: {
+    totalNumber() {
+      return this.data.length;
+    },
   },
   created() {
     this.$nextTick(() => {
-      this.getQuestionnaire()
-    })
+      this.getQuestionnaire();
+    });
   },
   methods: {
     getQuestionnaire() {
-      let params = {
-        questionnaireId: this.$route.params.questionnaireId
-      }
-      this.$http(this.$api.getQuestionnaire, params).then(({data}) => {
+      const params = {
+        questionnaireId: this.$route.params.questionnaireId,
+      };
+      this.$http(this.$api.getQuestionnaire, params).then(({ data }) => {
         this.data = this.deserialize(data);
-      })
+      });
     },
     deserialize(data) {
-      return deserialize(data)
+      return deserialize(data);
     },
-    getModelName (data) {
-      return `${data.type}Models`
+    getModelName(data) {
+      return `${data.type}Model`;
+    },
+    handleWriting(index) {
+      if (!this.$refs.models) {
+        return;
+      }
+      this.$refs
+        .models
+        .slice(0, index + 1)
+        .forEach((component) => {
+          component.validate();
+        });
+      this.updateCurrentNumber(index + 1);
+    },
+    updateCurrentNumber(number) {
+      this.currentNumber = this.currentNumber < number ? number : this.currentNumber;
     },
   },
   components: { ...Models },

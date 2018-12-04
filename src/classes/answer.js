@@ -2,7 +2,8 @@ import Base from './base';
 
 class Answer extends Base {
     type = 'Answer';
-    result =  '';
+
+    result = '';
 }
 
 export default Answer;

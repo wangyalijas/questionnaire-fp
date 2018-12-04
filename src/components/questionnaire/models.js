@@ -1,9 +1,9 @@
-import SelectionModels from './Selection';
-import CheckBoxModels from './CheckBox';
-import AnswerModels from './Answer';
+import SelectionModel from './Selection.vue';
+import CheckBoxModel from './CheckBox.vue';
+import AnswerModel from './Answer.vue';
 
 export default {
-  SelectionModels,
-  CheckBoxModels,
-  AnswerModels,
-}
+  SelectionModel,
+  CheckBoxModel,
+  AnswerModel,
+};

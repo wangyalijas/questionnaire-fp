@@ -2,8 +2,12 @@ import Base from './base';
 
 class CheckBox extends Base {
   type = 'CheckBox';
-  result =  [];
-  constructor(name = '', options = [{ name: '', sort: 0, isRight: false }]) {
+
+  result = [];
+
+  constructor(name = '', options = [{
+    name: '', sort: 0, isRight: false, class: 'normal',
+  }]) {
     super(name);
     this.options = options;
   }

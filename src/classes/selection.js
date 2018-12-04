@@ -2,9 +2,12 @@ import Base from './base';
 
 class Selection extends Base {
   type = 'Selection';
-  result =  '';
 
-  constructor(name = '', options = [{ name: '', sort: 0, isRight: false }]) {
+  result = '';
+
+  constructor(name = '', options = [{
+    name: '', sort: 0, isRight: false, class: 'normal',
+  }]) {
     super(name);
     this.options = options;
   }
