@@ -10,7 +10,7 @@
             <div class="list-title-small">{{item.describe}}</div>
           </div>
           <div class="list-right">
-            <div :class="['button', {'is-checked': item.isChecked}]" @click="handleRouter((item.isHobby &&  !item.isChecked)? 'hobby' : 'questionnaire', {questionnaireId: item.GUID})">参与考核</div>
+            <div :class="['button', {'is-checked': item.isChecked}]" @click="isJump(item)">参与考核</div>
           </div>
         </div>
       </template>
@@ -40,6 +40,11 @@ export default {
     })
   },
   methods: {
+    isJump(item) {
+      if(!item.isChecked) {
+        this.handleRouter( item.isHobby ? 'hobby' : 'questionnaire', {questionnaireId: item.GUID})
+      }
+    },
     getQuestionnaireList() {
       let params = {
         userNo: this.userInfo.userNo

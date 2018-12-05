@@ -16,6 +16,5 @@ export default function (data) {
       result.push(Object.assign(generate('checkBox'), data.selections[i]));
     }
   }
-
-  return result.sort((a, b) => (a.sort < b.sort ? 1 : 0));
+  return result.sort((a, b) => (a.sort > b.sort ? 1 : -1));
 }

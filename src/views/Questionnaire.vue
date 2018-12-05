@@ -60,28 +60,23 @@ export default {
   methods: {
     getQuestionnaire() {
       const params = {
-        questionnaireId: this.$route.params.questionnaireId,
+        questionnaireId: this.$route.query.questionnaireId,
       };
       this.$http(this.$api.getQuestionnaire, params).then(({ data }) => {
         this.data = this.deserialize(data);
       });
     },
-    postSubmitQuestionnaire() {
-      console.log(this.$refs.models, 1);
-      // console.log(!this.$refs.models || !this.$refs.models.every(item => item.validate()))
-
-      // if (!this.$refs.models || !this.$refs.models.every(item => item.validate())) {
-      //   return; // Cancel submit.
-      // }
-      const serializeData = this.serialize();
-      console.log(serializeData, 'serializeData');
-      const params = Object.assign(this.$route.params, serializeData, {userNo: this.userInfo.userNo});
-      console.log(params);
-      this.$http(this.$api.postSubmitQuestionnaire, params).then(({ data }) => {
-        if (data.state) {
-          this.handleRouter('success')
-        }
-      });
+    async postSubmitQuestionnaire() {
+      console.log(this.$refs.models, this.$refs.models.map(item => item.validate()))
+      if (this.$refs.models && this.$refs.models.every(item => item.validate())) {
+        const serializeData = this.serialize();
+        const params = Object.assign(this.$route.query, serializeData, {userNo: this.userInfo.userNo});
+        this.$http(this.$api.postSubmitQuestionnaire, params).then(({ data }) => {
+          if (data.state) {
+            this.handleRouter('success')
+          }
+        });
+      }
     },
     serialize(data = this.data) {
       return serialize(data);

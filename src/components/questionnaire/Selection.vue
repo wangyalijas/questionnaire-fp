@@ -37,16 +37,22 @@ export default {
       this.$set(this.value, 'result', result);
     },
     validate() {
-      this.value.options.map((item) => {
+      let passed = true;
+
+      this.value.options.forEach((item) => {
         if (item.isRight && !this.isChecked(item)) {
           this.$set(item, 'class', 'success-error');
-          return false
+          passed = false;
+          return;
         }
         if (!item.isRight && this.isChecked(item)) {
           this.$set(item, 'class', 'error');
-          return false
+          passed = false;
+          return;
         }
       });
+
+      return passed;
     },
     clearValidationClasses(option) {
       if (option.isRight && this.isChecked(option)) {
