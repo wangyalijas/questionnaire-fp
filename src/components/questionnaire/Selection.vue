@@ -39,10 +39,12 @@ export default {
     validate() {
       this.value.options.map((item) => {
         if (item.isRight && !this.isChecked(item)) {
-          return this.$set(item, 'class', 'success-error');
+          this.$set(item, 'class', 'success-error');
+          return false
         }
         if (!item.isRight && this.isChecked(item)) {
           this.$set(item, 'class', 'error');
+          return false
         }
       });
     },

@@ -5,6 +5,7 @@ import Home from './views/Home.vue';
 import Questionnaire from './views/Questionnaire.vue';
 import About from './views/About.vue';
 import Hobby from './views/Hobby.vue';
+import Success from './views/Success'
 
 Vue.use(Router);
 
@@ -50,6 +51,14 @@ export default new Router({
       component: Hobby,
       meta: {
         title: '个人兴趣爱好',
+      },
+    },
+    {
+      path: '/success',
+      name: 'success',
+      component: Success,
+      meta: {
+        title: '提交成功',
       },
     },
   ],

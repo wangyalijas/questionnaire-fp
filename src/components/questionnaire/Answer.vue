@@ -34,6 +34,7 @@ export default {
     validate() {
       if (!this.value.result) {
         this.isError = true;
+        return false
       }
     },
     clearValidationClasses() {

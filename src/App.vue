@@ -10,14 +10,14 @@ export default {
 };
 </script>
 <style lang="scss">
-  /*@import "../public/iconfont/iconfont.css";*/
-  @font-face {font-family: "iconfont";
-    src: url('../public/iconfont/iconfont.eot'); /* IE9*/
-    src: url('../public/iconfont/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('../public/iconfont/iconfont.woff') format('woff'), /* chrome, firefox */
-    url('../public/iconfont/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-    url('../public/iconfont/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
-  }
+  @import "../public/iconfont/iconfont.css";
+  /*@font-face {font-family: "iconfont";*/
+    /*src: url('../public/iconfont/iconfont.eot'); !* IE9*!*/
+    /*src: url('../public/iconfont/iconfont.eot#iefix') format('embedded-opentype'), !* IE6-IE8 *!*/
+    /*url('../public/iconfont/iconfont.woff') format('woff'), !* chrome, firefox *!*/
+    /*url('../public/iconfont/iconfont.ttf') format('truetype'), !* chrome, firefox, opera, Safari, Android, iOS 4.2+*!*/
+    /*url('../public/iconfont/iconfont.svg#iconfont') format('svg'); !* iOS 4.1- *!*/
+  /*}*/
   .iconfont {
     font-family:"iconfont" !important;
     font-size:16px;

@@ -4,27 +4,91 @@
       <span class="input-suffix">
         <img src="../../public/img/group.svg" alt="">
       </span>
-      <input type="text" placeholder="请输入姓名" class="input-inner">
+      <input
+        type="text"
+        placeholder="请输入姓名"
+        :class="['input-inner', {'error': isNoName}]"
+        v-model="form.name"
+        @input="clearValidationClasses('name')">
     </div>
     <div class="input">
       <span class="input-suffix">
         <img src="../../public/img/number.svg" alt="" class="number">
       </span>
-      <input type="text" placeholder="请输入工号" class="input-inner">
+      <input
+        type="text"
+        placeholder="请输入工号"
+        :class="['input-inner', {'error': isNoUserNo}]"
+        v-model="form.userNo"
+        @input="clearValidationClasses('userNo')">
     </div>
     <div class="input">
       <span class="input-suffix">
         <img src="../../public/img/area.svg" alt="" class="area">
       </span>
-      <input type="text" placeholder="请输入工作地" class="input-inner">
+      <input
+        type="text"
+        placeholder="请输入工作地"
+        :class="['input-inner']"
+        v-model="form.department">
     </div>
-    <div class="button" @click="handleRouter('home')">登录</div>
+    <div class="button" @click="postLogin()">登录</div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'login',
+  data() {
+    return {
+      form: {
+        name: '',
+        userNo: '',
+        department: '',
+      },
+      isNoName: false,
+      isNoUserNo: false,
+    }
+  },
+  methods: {
+    validate() {
+      if (!this.isChecked('name')) {
+        // 在这里设置输入框变红的样式
+        this.isNoName = true;
+        return false;
+      }
+      if (!this.isChecked('userNo')) {
+        // 在这里设置输入框变红的样式
+        this.isNoUserNo = true;
+        return false;
+      }
+      return true;
+    },
+    isChecked(label) {
+      return !!this.form[label]
+    },
+    clearValidationClasses(name) {
+      if (this.isChecked(name)) {
+        if (name === 'name') {
+          this.isNoName = false;
+        } else {
+          this.isNoUserNo = false;
+        }
+      }
+    },
+    postLogin() {
+      if(this.validate()) {
+        const params = this.form;
+        this.$http(this.$api.postLogin, params).then(({data}) => {
+          if (data.userNo) {
+            this.$store.commit('setUserInfo', data);
+            return this.handleRouter('home');
+          }
+          return false
+        });
+      }
+    },
+  }
 };
 </script>
 
@@ -56,6 +120,10 @@ export default {
     line-height: 1;
     outline: none;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+  }
+  .error {
+    border: 0.03rem solid rgba(255, 0, 0, 0.3) !important;
+    box-shadow: 0 0 9px 0 rgba(255, 0, 0, 0.3) !important;
   }
   .input-suffix {
     width: 0.53rem;

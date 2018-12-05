@@ -7,14 +7,9 @@ class Base {
     this.name = name;
   }
 
-  serialize() {
-    const result = Object.assign({}, this);
-
-    return result;
-  }
 
   validate() {
-    return !!this.name;
+    return !!this.result;
   }
 }
 

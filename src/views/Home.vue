@@ -10,7 +10,7 @@
             <div class="list-title-small">认识卫宁认识卫宁</div>
           </div>
           <div class="list-right">
-            <div class="button" @click="handleRouter(item.isHobby ? 'hobby' : 'questionnaire', {questionnaireId: item.GUID})">参与考核</div>
+            <div :class="['button', {'is-checked': item.isChecked}]" @click="handleRouter((item.isHobby &&  !item.isChecked)? 'hobby' : 'questionnaire', {questionnaireId: item.GUID})">参与考核</div>
           </div>
         </div>
       </template>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   name: 'home',
   data() {
@@ -28,6 +29,11 @@ export default {
   },
   components: {
   },
+  computed: {
+    ...mapGetters({
+      'userInfo': 'handleUserInfo'
+    })
+  },
   created() {
     this.$nextTick(() => {
       this.getQuestionnaireList()
@@ -35,7 +41,10 @@ export default {
   },
   methods: {
     getQuestionnaireList() {
-      this.$http(this.$api.getQuestionnaireList).then(({data}) => {
+      let params = {
+        userNo: this.userInfo.userNo
+      }
+      this.$http(this.$api.getQuestionnaireList, params).then(({data}) => {
         this.data = data;
       })
     }
@@ -100,6 +109,10 @@ export default {
             font-size: 0.48rem;
             color: $--color-text-primary;
             border-radius: 0.51rem;
+            &.is-checked {
+              background: #F2F2F2;
+              color: #B1B1B1;
+            }
           }
         }
       }

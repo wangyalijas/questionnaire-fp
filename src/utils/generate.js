@@ -3,7 +3,6 @@ import CheckBox from '../classes/checkBox';
 import Answer from '../classes/answer';
 
 export default function (type) {
-  console.log(type)
   switch (type) {
     case 'selection':
       return new Selection();

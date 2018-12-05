@@ -21,14 +21,16 @@
           ref="models">
         </component>
       </template>
-      <div class="button" @click="handleRouter('home')">提交</div>
+      <div class="button" @click="postSubmitQuestionnaire()">提交</div>
     </div>
   </div>
 </template>
 
 <script>
 import deserialize from '../utils/deserialize';
+import serialize from '../utils/serialize';
 import Models from '../components/questionnaire/models';
+import {mapGetters} from 'vuex';
 
 export default {
   name: 'questionnaire',
@@ -46,6 +48,9 @@ export default {
     totalNumber() {
       return this.data.length;
     },
+    ...mapGetters({
+      'userInfo': 'handleUserInfo'
+    }),
   },
   created() {
     this.$nextTick(() => {
@@ -60,6 +65,26 @@ export default {
       this.$http(this.$api.getQuestionnaire, params).then(({ data }) => {
         this.data = this.deserialize(data);
       });
+    },
+    postSubmitQuestionnaire() {
+      console.log(this.$refs.models, 1);
+      // console.log(!this.$refs.models || !this.$refs.models.every(item => item.validate()))
+
+      // if (!this.$refs.models || !this.$refs.models.every(item => item.validate())) {
+      //   return; // Cancel submit.
+      // }
+      const serializeData = this.serialize();
+      console.log(serializeData, 'serializeData');
+      const params = Object.assign(this.$route.params, serializeData, {userNo: this.userInfo.userNo});
+      console.log(params);
+      this.$http(this.$api.postSubmitQuestionnaire, params).then(({ data }) => {
+        if (data.state) {
+          this.handleRouter('success')
+        }
+      });
+    },
+    serialize(data = this.data) {
+      return serialize(data);
     },
     deserialize(data) {
       return deserialize(data);
@@ -79,8 +104,9 @@ export default {
         });
       this.updateCurrentNumber(index + 1);
     },
-    updateCurrentNumber(number) {
-      this.currentNumber = this.currentNumber < number ? number : this.currentNumber;
+    updateCurrentNumber() {
+      // this.currentNumber = this.currentNumber < number ? number : this.currentNumber;
+      this.currentNumber = this.$refs.models.filter(item => item.value.result).length;
     },
   },
   components: { ...Models },
@@ -88,16 +114,26 @@ export default {
 </script>
 
 <style lang="scss">
-  .icon-weigouxuan:before {
-    font-family: iconfont;
-    content: "\e623";
+  /*.icon-weigouxuan:before {*/
+    /*font-family: iconfont;*/
+    /*content: "\e623";*/
+    /*font-size: 0.51rem;*/
+    /*transition: .1s;*/
+    /*color: #E7E7E7;*/
+  /*}*/
+  /*.icon-gouxuan_:before {*/
+    /*font-family: iconfont;*/
+    /*content: "\e630";*/
+    /*font-size: 0.51rem;*/
+    /*transition: .1s;*/
+    /*color: #2660F7;*/
+  /*}*/
+  .icon-weigouxuan {
     font-size: 0.51rem;
     transition: .1s;
     color: #E7E7E7;
   }
-  .icon-gouxuan_:before {
-    font-family: iconfont;
-    content: "\e630";
+  .icon-gouxuan_ {
     font-size: 0.51rem;
     transition: .1s;
     color: #2660F7;

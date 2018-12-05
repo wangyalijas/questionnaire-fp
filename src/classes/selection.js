@@ -12,6 +12,14 @@ class Selection extends Base {
     this.options = options;
   }
 
+  serialize() {
+    const result = {
+      selectionId: this.id,
+      optionId: this.result,
+    }
+    return result;
+  }
+
   validate() {
     return super.validate() && this.validateOptions();
   }

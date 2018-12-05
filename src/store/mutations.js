@@ -4,7 +4,7 @@ export default {
    * 清除tab足迹
    * @author wyl  update (2017/12/27))
    */
-  emptySummary (state, data = []) {
-    Vue.set(state, 'pathSummary', data)
+  setUserInfo (state, data = {}) {
+    Vue.set(state, 'userInfo', data)
   }
 }
