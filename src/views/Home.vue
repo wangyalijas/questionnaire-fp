@@ -7,7 +7,7 @@
         <div class="list-item clearfix" :key="index">
           <div class="list-left">
             <div class="list-title">{{item.name}}</div>
-            <div class="list-title-small">认识卫宁认识卫宁</div>
+            <div class="list-title-small">{{item.describe}}</div>
           </div>
           <div class="list-right">
             <div :class="['button', {'is-checked': item.isChecked}]" @click="handleRouter((item.isHobby &&  !item.isChecked)? 'hobby' : 'questionnaire', {questionnaireId: item.GUID})">参与考核</div>
