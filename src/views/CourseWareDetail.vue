@@ -1,6 +1,11 @@
 <template>
   <div class="course-ware">
-    <pdf v-if="src" :src="baseUrl"></pdf>
+    {{currentPage}} / {{pageCount}}
+    <pdf
+    v-if="src"
+    :src="baseUrl"
+    @num-pages="pageCount = $event"
+    @page-loaded="currentPage = $event"></pdf>
   </div>
 </template>
 
@@ -12,6 +17,8 @@
     data() {
       return {
         src: '',
+        currentPage: 0,
+        pageCount: 0,
       }
     },
     computed: {
