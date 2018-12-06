@@ -126,12 +126,10 @@ export default {
   /*}*/
   .icon-weigouxuan {
     font-size: 0.51rem;
-    transition: .1s;
     color: #E7E7E7;
   }
   .icon-gouxuan_ {
     font-size: 0.51rem;
-    transition: .1s;
     color: #2660F7;
   }
   .questionnaire {
@@ -242,13 +240,6 @@ export default {
                 height: 0.51rem;
                 background-repeat: no-repeat;
                 background-size: 100%;
-              }
-              .iconfont {
-                font-size: 0.51rem;
-                transition: .2s;
-                &.icon-gouxuan_ {
-                  color: #2660F7;
-                }
               }
             }
             .check-label {

@@ -1,9 +1,16 @@
 <template>
   <div class="about">
     <div class="list-content">
+    <template v-if="data.length">
       <template v-for="(item, index) in data">
         <div class="list-item clearfix" :key="index" @click="handleRouter('courseWareDetail', {path: item.path})">
-            <div class="list-title">{{item.name}}</div>
+          <div class="list-title">{{item.name}}</div>
+        </div>
+      </template>
+    </template>
+      <template v-if="!data.length">
+        <div class="no-data">
+          暂无数据
         </div>
       </template>
     </div>
@@ -40,6 +47,9 @@
 <style lang="scss" scoped>
   .about {
     position: relative;
+  }
+  .no-data {
+    margin-top: 5rem;
   }
   .list-content {
     position: absolute;
