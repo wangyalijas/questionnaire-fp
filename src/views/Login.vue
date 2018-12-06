@@ -16,7 +16,7 @@
         <img src="../../public/img/number.svg" alt="" class="number">
       </span>
       <input
-        type="text"
+        type="number"
         placeholder="请输入工号"
         :class="['input-inner', {'error': isNoUserNo}]"
         v-model="form.userNo"
