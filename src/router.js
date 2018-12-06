@@ -5,7 +5,8 @@ import Home from './views/Home.vue';
 import Questionnaire from './views/Questionnaire.vue';
 import About from './views/About.vue';
 import Hobby from './views/Hobby.vue';
-import Success from './views/Success'
+import Success from './views/Success';
+import CourseWareDetail from './views/CourseWareDetail'
 
 Vue.use(Router);
 
@@ -61,5 +62,13 @@ export default new Router({
         title: '提交成功',
       },
     },
+    {
+      path: '/courseWareDetail',
+      name: 'courseWareDetail',
+      component: CourseWareDetail,
+      meta: {
+        title: '认识卫宁课件',
+      },
+    }
   ],
 });

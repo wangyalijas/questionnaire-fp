@@ -17,6 +17,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  .icon-gouxuan_ {
+    background-image: url("../../public/img/select.svg");
+    width: 2.33rem;
+    height: 2.33rem;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
   .icon-content {
     display: flex;
     justify-content: center;

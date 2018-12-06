@@ -70,6 +70,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
   .success-error {
     border: 0.03rem solid rgba(0, 255, 0, 0.3) !important;
     box-shadow: 0 0 9px 0 rgba(0, 255, 0, 0.5) !important;

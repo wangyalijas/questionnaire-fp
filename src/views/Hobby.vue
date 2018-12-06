@@ -3,47 +3,109 @@
     <div class="background">
       <img src="../../public/img/fill.svg" alt="" class="fill">
       <div class="bg-button">
-        <span class="bg-left"  @click="handleRouter('about')">
-          <img src="../../public/img/class.svg" alt="">
+        <span class="bg-left">
+          <img src="../../public/img/heart.svg" alt="">
         </span>
         <span class="bg-right">让我们更了解你</span>
       </div>
     </div>
     <div class="questionnaire-content">
-      <div class="item">
-        <div class="title">您平时喜欢做些什么呢</div>
-        <textarea placeholder="喜欢的游戏，喜欢的书..." type="textarea" rows="2" autocomplete="off" validateevent="true"
-                  class="textarea__inner"></textarea>
-      </div>
-      <div class="item textarea">
-        <div class="title">您平时喜欢做些什么呢</div>
-        <textarea placeholder="喜欢的游戏，喜欢的书..." type="textarea" rows="2" autocomplete="off" validateevent="true"
-                  class="textarea__inner"></textarea>
-        <div class="button" @click="handleRouter('home')">提交</div>
-      </div>
+      <template v-for="(item, index) in data">
+        <component
+          :key="index"
+          :is="getModelName(item)"
+          :fatherIndex="index + 1"
+          v-model="data[index]"
+          @writing="handleWriting(index)"
+          ref="models">
+        </component>
+      </template>
+      <div class="button" @click="postSubmitQuestionnaire()">提交</div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'hobby',
-  created() {
-    this.$nextTick(() => {
-      this.getQuestionnaire()
-    })
-  },
-  methods: {
-    getQuestionnaire() {
-      let params = {
-        questionnaireId: this.$route.params.questionnaireId
-      }
-      this.$http(this.$api.getQuestionnaire, params).then(({data}) => {
-        this.data = data;
-      })
-    }
-  }
-};
+  import deserialize from '../utils/deserialize';
+  import serialize from '../utils/serialize';
+  import Models from '../components/questionnaire/models';
+  import {mapGetters} from 'vuex';
+
+  export default {
+    name: 'hobby',
+    data() {
+      return {
+        result: {
+          answers: [],
+          selections: [],
+        },
+        data: [],
+        currentNumber: 0,
+        questionnaireId: '',
+      };
+    },
+    computed: {
+      totalNumber() {
+        return this.data.length;
+      },
+      ...mapGetters({
+        'userInfo': 'handleUserInfo'
+      }),
+    },
+    created() {
+      this.$nextTick(() => {
+        this.getQuestionnaire();
+      });
+    },
+    methods: {
+      getQuestionnaire() {
+        const params = {
+          questionnaireId: this.$route.query.questionnaireId,
+        };
+        this.$http(this.$api.getQuestionnaire, params).then(({ data }) => {
+          this.data = this.deserialize(data);
+        });
+      },
+      async postSubmitQuestionnaire() {
+        console.log(this.$refs.models, this.$refs.models.map(item => item.validate()))
+        if (this.$refs.models && this.$refs.models.every(item => item.validate())) {
+          const serializeData = this.serialize();
+          const params = Object.assign(this.$route.query, serializeData, {userNo: this.userInfo.userNo});
+          this.$http(this.$api.postSubmitQuestionnaire, params).then(({ data }) => {
+            if (data.state) {
+              this.handleRouter('success')
+            }
+          });
+        }
+      },
+      serialize(data = this.data) {
+        return serialize(data);
+      },
+      deserialize(data) {
+        return deserialize(data);
+      },
+      getModelName(data) {
+        return `${data.type}Model`;
+      },
+      handleWriting(index) {
+        if (!this.$refs.models) {
+          return;
+        }
+        this.$refs
+          .models
+          .slice(0, index + 1)
+          .forEach((component) => {
+            component.validate();
+          });
+        this.updateCurrentNumber(index + 1);
+      },
+      updateCurrentNumber() {
+        // this.currentNumber = this.currentNumber < number ? number : this.currentNumber;
+        this.currentNumber = this.$refs.models.filter(item => item.value.result).length;
+      },
+    },
+    components: { ...Models },
+  };
 </script>
 
 <style lang="scss" scoped>

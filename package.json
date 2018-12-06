@@ -9,8 +9,11 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-runtime": "^6.26.0",
+    "pdfjs-dist": "^2.0.943",
     "sass-resources-loader": "^2.0.0",
     "vue": "^2.5.17",
+    "vue-pdf": "^4.0.4",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4"

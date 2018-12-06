@@ -2,7 +2,7 @@
   <div class="questionnaire">
     <div class="background">
       <img src="../../public/img/fill.svg" alt="" class="fill">
-      <div class="bg-button" @click="handleRouter('about')">
+      <div class="bg-button" @click="handleRouter('about', {questionnaireId: $route.query.questionnaireId})">
         <span class="bg-left">
           <img src="../../public/img/class.svg" alt="">
         </span>
@@ -42,6 +42,7 @@ export default {
       },
       data: [],
       currentNumber: 0,
+      questionnaireId: '',
     };
   },
   computed: {
@@ -228,6 +229,20 @@ export default {
               align-items: center;
               justify-items: center;
               margin-left: 0.27rem;
+              .icon-weigouxuan {
+                background-image: url("../../public/img/no-select.svg");
+                width: 0.51rem;
+                height: 0.51rem;
+                background-repeat: no-repeat;
+                background-size: 100%;
+              }
+              .icon-gouxuan_ {
+                background-image: url("../../public/img/select.svg");
+                width: 0.51rem;
+                height: 0.51rem;
+                background-repeat: no-repeat;
+                background-size: 100%;
+              }
               .iconfont {
                 font-size: 0.51rem;
                 transition: .2s;

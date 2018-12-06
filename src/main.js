@@ -7,6 +7,9 @@ import http from './services/http/httpAxios';
 import api from './services/api';
 import LoadingMixin from './mixins/loading';
 
+// import pdf from './components/pdf';
+// Vue.use(pdf)
+
 Vue.prototype.$api = api;
 Vue.prototype.$http = http;
 Vue.mixin(LoadingMixin);
